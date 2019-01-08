@@ -1,39 +1,52 @@
-'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+Object.defineProperty(exports, "__esModule", {value: true});
 
-require('core-js/modules/es6.array.map');
-require('core-js/modules/es6.regexp.match');
-require('core-js/modules/es6.array.some');
-require('core-js/modules/es6.function.bind');
-var _newArrowCheck = _interopDefault(require('@babel/runtime/helpers/newArrowCheck'));
+function _interopDefault(ex) {
+  return ex && typeof ex === "object" && "default" in ex ? ex.default : ex;
+}
 
-var _this = undefined;
+require("core-js/modules/es6.array.map");
+require("core-js/modules/es6.regexp.match");
+require("core-js/modules/es6.array.some");
+require("core-js/modules/es6.function.bind");
+const _newArrowCheck = _interopDefault(
+  require("@babel/runtime/helpers/newArrowCheck")
+);
 
-var locationsToString = function locationsToString(locations) {
-  var _this2 = this;
+const _this;
+
+const locationsToString = function locationsToString(locations) {
+  const _this2 = this;
 
   _newArrowCheck(this, _this);
 
-  return locations.map(function (_ref) {
-    var column = _ref.column,
-        line = _ref.line;
+  return locations
+    .map(
+      (_ref) => {
+        let column = _ref.column;
 
-    _newArrowCheck(this, _this2);
+        
+var line = _ref.line;
 
-    return "".concat(line, ":").concat(column);
-  }.bind(this)).join("; ");
+        _newArrowCheck(this, _this2);
+
+        return "".concat(line, ":").concat(column);
+      }
+    )
+    .join("; ");
 }.bind(undefined);
 
-var errorToString = function errorToString(_ref2) {
-  var message = _ref2.message,
-      locations = _ref2.locations;
+const errorToString = function errorToString(_ref2) {
+  const message = _ref2.message;
+
+  var locations = _ref2.locations;
 
   _newArrowCheck(this, _this);
 
-  return message + (locations ? " (".concat(locationsToString(locations), ")") : "");
+  return (
+    message + (locations ? " (".concat(locationsToString(locations), ")") : "")
+  );
 }.bind(undefined);
 /**
  * Transforms an array of GqlError into a string.
@@ -53,18 +66,19 @@ var errorToString = function errorToString(_ref2) {
  * // Second Error (4:2)
  */
 
-
-var errorsToString = function errorsToString(gqlErrors) {
+const errorsToString = function errorsToString(gqlErrors) {
   _newArrowCheck(this, _this);
 
   return gqlErrors.map(errorToString).join("\n");
 }.bind(undefined);
 
-var _this$1 = undefined;
+const _this$1;
 
-var operationTypeRe = /^\s*(query|mutation|subscription|\{)/;
+const operationTypeRe = /^\s*(query|mutation|subscription|\{)/;
 
-var getOperationTypeFromMatched = function getOperationTypeFromMatched(matched) {
+const getOperationTypeFromMatched = function getOperationTypeFromMatched(
+  matched
+) {
   _newArrowCheck(this, _this$1);
 
   return matched === "{" ? "query" : matched;
@@ -88,11 +102,10 @@ var getOperationTypeFromMatched = function getOperationTypeFromMatched(matched) 
  * console.log(operationType); // "subscription"
  */
 
-
-var getOperationType = function getOperationType(operation) {
+let getOperationType = function getOperationType(operation) {
   _newArrowCheck(this, _this$1);
 
-  var result = operation.match(operationTypeRe);
+  const result = operation.match(operationTypeRe);
 
   if (!result) {
     throw new TypeError("Invalid operation:\n".concat(operation));
@@ -101,32 +114,34 @@ var getOperationType = function getOperationType(operation) {
   return getOperationTypeFromMatched(result[1]);
 }.bind(undefined);
 
-var _this$2 = undefined;
+const _this$2;
 
-var isSubscription = function isSubscription(definition) {
+const isSubscription = function isSubscription(definition) {
   _newArrowCheck(this, _this$2);
 
-  return definition.kind === "OperationDefinition" && definition.operation === "subscription";
+  return (
+    definition.kind === "OperationDefinition" &&
+    definition.operation === "subscription"
+  );
 }.bind(undefined);
 /**
  * Returns true if documentNode has a subscription or false otherwise
  */
 
-
-var hasSubscription = function hasSubscription(documentNode) {
+const hasSubscription = function hasSubscription(documentNode) {
   _newArrowCheck(this, _this$2);
 
   return documentNode.definitions.some(isSubscription);
 }.bind(undefined);
 
-var _this$3 = undefined;
+const _this$3;
 
 /**
  * Creates a GqlRequest using given GqlRequestCompat
  *
  * @param {GqlRequestCompat<Variables>} gqlRequestCompat
  *
- * @return {GqlRequest<Variables>} 
+ * @return {GqlRequest<Variables>}
  *
  * @example
  * const query = `
@@ -137,25 +152,28 @@ var _this$3 = undefined;
  *     }
  *   }
  * `;
- * 
+ *
  * console.log(requestFromCompat({query, variables: {userId: 10}}));
  * // {operation: "...", variables: {userId: 10}}
  */
-var requestFromCompat = function requestFromCompat(_ref) {
-  var operation = _ref.query,
-      variables = _ref.variables;
+const requestFromCompat = function requestFromCompat(_ref) {
+  const operation = _ref.query;
+
+  var variables = _ref.variables;
 
   _newArrowCheck(this, _this$3);
 
-  return variables ? {
-    operation: operation,
-    variables: variables
-  } : {
-    operation: operation
-  };
+  return variables
+    ? {
+        operation,
+        variables
+      }
+    : {
+        operation
+      };
 }.bind(undefined);
 
-var _this$4 = undefined;
+const _this$4;
 
 /**
  * Creates a GqlRequest using given GqlRequestCompat
@@ -163,7 +181,7 @@ var _this$4 = undefined;
  * @param {GqlRequest<Variables>} gqlRequest
  *
  * @return {GqlRequestCompat<Variables>}
- * 
+ *
  * @example
  * const operation = `
  *   query userQuery($userId: ID!) {
@@ -173,30 +191,30 @@ var _this$4 = undefined;
  *     }
  *   }
  * `;
- * 
+ *
  * console.log(requestToCompat({operation, variables: {userId: 10}}));
  * // {query: "...", variables: {userId: 10}}
  */
-var requestToCompat = function requestToCompat(_ref) {
-  var query = _ref.operation,
-      variables = _ref.variables;
+const requestToCompat = function requestToCompat(_ref) {
+  const query = _ref.operation;
+
+  var variables = _ref.variables;
 
   _newArrowCheck(this, _this$4);
 
-  return variables ? {
-    query: query,
-    variables: variables
-  } : {
-    query: query
-  };
+  return variables
+    ? {
+        query,
+        variables
+      }
+    : {
+        query
+      };
 }.bind(undefined);
-
-// export type {DocumentNode} from "graphql/language/ast";
- // export type * from "./types";
 
 exports.errorsToString = errorsToString;
 exports.getOperationType = getOperationType;
 exports.hasSubscription = hasSubscription;
 exports.requestFromCompat = requestFromCompat;
 exports.requestToCompat = requestToCompat;
-//# sourceMappingURL=index.js.map
+// # sourceMappingURL=index.js.map
