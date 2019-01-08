@@ -42,6 +42,8 @@
 ## Types
 
 ```javascript
+export type {DocumentNode} from "graphql/language/ast";
+
 type GqlErrorLocation = {|
   line: number,
   column: number
