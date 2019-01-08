@@ -1,53 +1,16 @@
+'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
 
-Object.defineProperty(exports, "__esModule", {value: true});
+const locationsToString = locations => locations.map(({
+  column,
+  line
+}) => `${line}:${column}`).join("; ");
 
-function _interopDefault(ex) {
-  return ex && typeof ex === "object" && "default" in ex ? ex.default : ex;
-}
-
-require("core-js/modules/es6.array.map");
-require("core-js/modules/es6.regexp.match");
-require("core-js/modules/es6.array.some");
-require("core-js/modules/es6.function.bind");
-const _newArrowCheck = _interopDefault(
-  require("@babel/runtime/helpers/newArrowCheck")
-);
-
-const _this;
-
-const locationsToString = function locationsToString(locations) {
-  const _this2 = this;
-
-  _newArrowCheck(this, _this);
-
-  return locations
-    .map(
-      (_ref) => {
-        let column = _ref.column;
-
-        
-var line = _ref.line;
-
-        _newArrowCheck(this, _this2);
-
-        return "".concat(line, ":").concat(column);
-      }
-    )
-    .join("; ");
-}.bind(undefined);
-
-const errorToString = function errorToString(_ref2) {
-  const message = _ref2.message;
-
-  var locations = _ref2.locations;
-
-  _newArrowCheck(this, _this);
-
-  return (
-    message + (locations ? " (".concat(locationsToString(locations), ")") : "")
-  );
-}.bind(undefined);
+const errorToString = ({
+  message,
+  locations
+}) => message + (locations ? ` (${locationsToString(locations)})` : "");
 /**
  * Transforms an array of GqlError into a string.
  *
@@ -66,23 +29,12 @@ const errorToString = function errorToString(_ref2) {
  * // Second Error (4:2)
  */
 
-const errorsToString = function errorsToString(gqlErrors) {
-  _newArrowCheck(this, _this);
 
-  return gqlErrors.map(errorToString).join("\n");
-}.bind(undefined);
-
-const _this$1;
+const errorsToString = gqlErrors => gqlErrors.map(errorToString).join("\n");
 
 const operationTypeRe = /^\s*(query|mutation|subscription|\{)/;
 
-const getOperationTypeFromMatched = function getOperationTypeFromMatched(
-  matched
-) {
-  _newArrowCheck(this, _this$1);
-
-  return matched === "{" ? "query" : matched;
-}.bind(undefined);
+const getOperationTypeFromMatched = matched => matched === "{" ? "query" : matched;
 /**
  * Returns the type (query, mutation, or subscription) of the given operation
  *
@@ -102,46 +54,31 @@ const getOperationTypeFromMatched = function getOperationTypeFromMatched(
  * console.log(operationType); // "subscription"
  */
 
-let getOperationType = function getOperationType(operation) {
-  _newArrowCheck(this, _this$1);
 
+const getOperationType = operation => {
   const result = operation.match(operationTypeRe);
 
   if (!result) {
-    throw new TypeError("Invalid operation:\n".concat(operation));
+    throw new TypeError(`Invalid operation:\n${operation}`);
   }
 
   return getOperationTypeFromMatched(result[1]);
-}.bind(undefined);
+};
 
-const _this$2;
-
-const isSubscription = function isSubscription(definition) {
-  _newArrowCheck(this, _this$2);
-
-  return (
-    definition.kind === "OperationDefinition" &&
-    definition.operation === "subscription"
-  );
-}.bind(undefined);
+const isSubscription = definition => definition.kind === "OperationDefinition" && definition.operation === "subscription";
 /**
  * Returns true if documentNode has a subscription or false otherwise
  */
 
-const hasSubscription = function hasSubscription(documentNode) {
-  _newArrowCheck(this, _this$2);
 
-  return documentNode.definitions.some(isSubscription);
-}.bind(undefined);
-
-const _this$3;
+const hasSubscription = documentNode => documentNode.definitions.some(isSubscription);
 
 /**
  * Creates a GqlRequest using given GqlRequestCompat
  *
  * @param {GqlRequestCompat<Variables>} gqlRequestCompat
  *
- * @return {GqlRequest<Variables>}
+ * @return {GqlRequest<Variables>} 
  *
  * @example
  * const query = `
@@ -152,28 +89,19 @@ const _this$3;
  *     }
  *   }
  * `;
- *
+ * 
  * console.log(requestFromCompat({query, variables: {userId: 10}}));
  * // {operation: "...", variables: {userId: 10}}
  */
-const requestFromCompat = function requestFromCompat(_ref) {
-  const operation = _ref.query;
-
-  var variables = _ref.variables;
-
-  _newArrowCheck(this, _this$3);
-
-  return variables
-    ? {
-        operation,
-        variables
-      }
-    : {
-        operation
-      };
-}.bind(undefined);
-
-const _this$4;
+const requestFromCompat = ({
+  query: operation,
+  variables
+}) => variables ? {
+  operation,
+  variables
+} : {
+  operation
+};
 
 /**
  * Creates a GqlRequest using given GqlRequestCompat
@@ -181,7 +109,7 @@ const _this$4;
  * @param {GqlRequest<Variables>} gqlRequest
  *
  * @return {GqlRequestCompat<Variables>}
- *
+ * 
  * @example
  * const operation = `
  *   query userQuery($userId: ID!) {
@@ -191,30 +119,25 @@ const _this$4;
  *     }
  *   }
  * `;
- *
+ * 
  * console.log(requestToCompat({operation, variables: {userId: 10}}));
  * // {query: "...", variables: {userId: 10}}
  */
-const requestToCompat = function requestToCompat(_ref) {
-  const query = _ref.operation;
+const requestToCompat = ({
+  operation: query,
+  variables
+}) => variables ? {
+  query,
+  variables
+} : {
+  query
+};
 
-  var variables = _ref.variables;
-
-  _newArrowCheck(this, _this$4);
-
-  return variables
-    ? {
-        query,
-        variables
-      }
-    : {
-        query
-      };
-}.bind(undefined);
+// @flow
 
 exports.errorsToString = errorsToString;
 exports.getOperationType = getOperationType;
 exports.hasSubscription = hasSubscription;
 exports.requestFromCompat = requestFromCompat;
 exports.requestToCompat = requestToCompat;
-// # sourceMappingURL=index.js.map
+//# sourceMappingURL=index.js.map

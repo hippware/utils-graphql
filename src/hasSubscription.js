@@ -1,6 +1,3 @@
-// @flow
-
-import type {DocumentNode} from "graphql/language/ast";
 
 const isSubscription = definition =>
   definition.kind === "OperationDefinition" &&
@@ -9,7 +6,7 @@ const isSubscription = definition =>
 /**
  * Returns true if documentNode has a subscription or false otherwise
  */
-const hasSubscription = (documentNode: DocumentNode): boolean =>
+const hasSubscription = documentNode  =>
   documentNode.definitions.some(isSubscription);
 
 export default hasSubscription;

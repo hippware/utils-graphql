@@ -82,7 +82,7 @@ Transforms an array of GqlError into a string.
 
 #### Parameters
 
--   `gqlErrors` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;GqlError>** 
+-   `gqlErrors`  
 
 #### Examples
 
@@ -100,15 +100,13 @@ const error = errorsToString(gqlRespose.errors);
 // Second Error (4:2)
 ```
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
 ### getOperationType
 
 Returns the type (query, mutation, or subscription) of the given operation
 
 #### Parameters
 
--   `operation` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `operation`  
 
 #### Examples
 
@@ -127,17 +125,13 @@ const operationType = getOperationType(operation);
 console.log(operationType); // "subscription"
 ```
 
-Returns **GqlOperationType** 
-
 ### hasSubscription
 
 Returns true if documentNode has a subscription or false otherwise
 
 #### Parameters
 
--   `documentNode` **DocumentNode** 
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `documentNode`  
 
 ### requestFromCompat
 

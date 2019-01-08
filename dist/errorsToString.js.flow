@@ -1,7 +1,3 @@
-// @flow
-
-import type {GqlError} from "./types";
-
 const locationsToString = locations =>
   locations.map(({column, line}) => `${line}:${column}`).join("; ");
 
@@ -25,7 +21,7 @@ const errorToString = ({message, locations}) =>
  * // First Error (2:10)
  * // Second Error (4:2)
  */
-const errorsToString = (gqlErrors: Array<GqlError>): string =>
+const errorsToString = gqlErrors =>
   gqlErrors.map(errorToString).join("\n");
 
 export default errorsToString;

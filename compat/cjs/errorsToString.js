@@ -1,36 +1,14 @@
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+const locationsToString = locations => locations.map(({
+  column,
+  line
+}) => `${line}:${column}`).join("; ");
 
-require('core-js/modules/es6.array.map');
-require('core-js/modules/es6.function.bind');
-var _newArrowCheck = _interopDefault(require('@babel/runtime/helpers/newArrowCheck'));
-
-var _this = undefined;
-
-var locationsToString = function locationsToString(locations) {
-  var _this2 = this;
-
-  _newArrowCheck(this, _this);
-
-  return locations.map(function (_ref) {
-    var column = _ref.column,
-        line = _ref.line;
-
-    _newArrowCheck(this, _this2);
-
-    return "".concat(line, ":").concat(column);
-  }.bind(this)).join("; ");
-}.bind(undefined);
-
-var errorToString = function errorToString(_ref2) {
-  var message = _ref2.message,
-      locations = _ref2.locations;
-
-  _newArrowCheck(this, _this);
-
-  return message + (locations ? " (".concat(locationsToString(locations), ")") : "");
-}.bind(undefined);
+const errorToString = ({
+  message,
+  locations
+}) => message + (locations ? ` (${locationsToString(locations)})` : "");
 /**
  * Transforms an array of GqlError into a string.
  *
@@ -50,11 +28,7 @@ var errorToString = function errorToString(_ref2) {
  */
 
 
-var errorsToString = function errorsToString(gqlErrors) {
-  _newArrowCheck(this, _this);
-
-  return gqlErrors.map(errorToString).join("\n");
-}.bind(undefined);
+const errorsToString = gqlErrors => gqlErrors.map(errorToString).join("\n");
 
 module.exports = errorsToString;
 //# sourceMappingURL=errorsToString.js.map

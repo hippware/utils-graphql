@@ -1,8 +1,3 @@
-import 'core-js/modules/es6.function.bind';
-import _newArrowCheck from '@babel/runtime/helpers/newArrowCheck';
-
-var _this = undefined;
-
 /**
  * Creates a GqlRequest using given GqlRequestCompat
  *
@@ -23,19 +18,15 @@ var _this = undefined;
  * console.log(requestFromCompat({query, variables: {userId: 10}}));
  * // {operation: "...", variables: {userId: 10}}
  */
-var requestFromCompat = function requestFromCompat(_ref) {
-  var operation = _ref.query,
-      variables = _ref.variables;
-
-  _newArrowCheck(this, _this);
-
-  return variables ? {
-    operation: operation,
-    variables: variables
-  } : {
-    operation: operation
-  };
-}.bind(undefined);
+const requestFromCompat = ({
+  query: operation,
+  variables
+}) => variables ? {
+  operation,
+  variables
+} : {
+  operation
+};
 
 export default requestFromCompat;
 //# sourceMappingURL=requestFromCompat.js.map
